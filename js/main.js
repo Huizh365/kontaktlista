@@ -77,33 +77,32 @@ function createButton(innerText, className, event) {
 
 // validation 
 function validateForm(nameInput, telInput) {
-    if(!nameInput.value || !telInput.value) {
-        // errorMessage.innerText = `Fyll i fälten "Namn" och "Telefon".`;
+    const name = nameInput.value.trim();
+    const tel = telInput.value.trim();
+    if(!name || !tel) {
         getErrorMessage(`Fyll i fälten "Namn" och "Telefon".`);
         return false;
-    } else if (!checkIfTelNumber(telInput.value)) {
-        return false;
-    } else {
-        // errorMessage.innerText = '';
-        getErrorMessage('');
-        return true;
     }
+    if (!checkIfTelNumber(tel)) {
+        return false;
+    } 
+    getErrorMessage('');
+    return true;
 }
 
 
 function checkIfTelNumber(input) {
-    // allow + in front, at least one number, space and - between numbers(not in the end)
+    // allow + in front, space and - between numbers(not in the end)
     const telPattern = /^\+?[0-9]+(?:[\s\-][0-9]+)*$/;  
     if (!telPattern.test(input)) {
-        // errorMessage.innerText = `Felaktigt telefonnumner!`;
-        getErrorMessage(`Felaktigt telefonnumner!`)
+        getErrorMessage(`Felaktigt telefonnumner!`);
         return false;
     }
         return true;
   }
 
-function getErrorMessage(errorMessage) {
-    errorMessage.innerText = errorMessage;
+function getErrorMessage(message) {
+    errorMessage.innerText = message;
 }
 
 
