@@ -44,7 +44,7 @@ createContactBtn.addEventListener('click', function(e){
 //delete contact list
 deleteContactListBtn.addEventListener('click', function(){
     let text = `Är du säker att du vill radera?`
-    if (confirm(text) == true) {
+    if (confirm(text) === true) {
         contactList.replaceChildren();
     } else {
         return;
@@ -124,13 +124,12 @@ function saveContact(e) {
     if(!validateForm(nameInfo, telInfo)){
         return;
     }
-    nameInfo.value = nameInfo.value;
-    telInfo.value = telInfo.value;
     nameInfo.disabled = true;
     telInfo.disabled = true;
     e.target.style.display = 'none';
     contactInfo.children[2].style.display = 'inline';
 }
+
 
 // delete one contact
 function deleteContact(e){
