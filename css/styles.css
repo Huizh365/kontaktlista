@@ -1,0 +1,137 @@
+body {
+    background-color: lightskyblue;
+    color:rgb(50, 50, 50);
+    box-sizing: border-box;
+}
+
+main {
+    width: 70%;
+    max-width: 700px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.579);
+    justify-content: center;
+}
+
+#error-message {
+    text-align: center;
+    color:  rgb(227, 0, 0);
+    min-height: 20px;
+    visibility: hidden;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.section-container {
+    width: 100%;
+}
+input {
+    border: none;
+    border-radius: 2px;
+    min-height: 25px;
+}
+
+#create-contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.2em;
+}
+.edit-button,
+.delete-button,
+.save-button {
+    width: 15%;
+    border-radius: 2px;
+    border: none;
+    box-shadow: 0.5px 0.5px grey;
+    color: white;
+    min-height: 25px;
+}
+
+.edit-button {
+    background-color: rgba(74, 189, 255, 0.777);
+}
+.delete-button {
+    background-color: rgb(255, 179, 0);
+}
+
+.save-button {
+    background-color: rgb(70, 226, 174);
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+li.contact-info {
+    width: 100%;
+    margin: 0.5em auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.2em;
+    min-height: 25px;
+}
+
+#contact-container {
+    margin-bottom: 25px;
+}
+
+
+/************* small screen *************/
+@media only screen and (max-width: 768px) {
+    h2 {
+        font-size: 1.3em;
+    }
+    #create-contact,
+    li.contact-info {
+        width: 80%;
+        margin: 0 auto;
+        display: grid;
+    }
+    #create-contact {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 10px 5px;
+    }
+    #name-input {
+        grid-column: 1/span 2;
+    }
+    #tel-input {
+        grid-column: 1/span 2;
+    }
+    #create-btn {
+        grid-column:1/span 1;
+        width:auto;
+    }
+    #delete-all-btn {
+        grid-column: 2/span 1;
+        width: auto;
+    }
+
+    li.contact-info {
+        margin-bottom: 20px;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 5px;
+    }
+    .added-name {
+        grid-column: 1/span 3;
+    }
+    .added-tel {
+        grid-column: 1/span 3;
+        grid-row: 2/span 1;
+    }
+    li .edit-button,
+    li .save-button,
+    li .delete-button {
+        width:auto;
+    }
+}

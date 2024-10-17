@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kontaktlista applikation</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <main>
+        <!-- part 1, error message -->
+        <div class="section-container">
+        <p id="error-message"></p>
+        </div>
+
+        <!-- part 2, create contact -->
+        <div id="create-contact" class="section-container">
+            <input id="name-input" type="text" placeholder="Namn">
+            <input id="tel-input" type="tel" placeholder="Telefon">
+            <button type="button" id="create-btn" class="edit-button">Skapa</button>
+            <button type="button" id="delete-all-btn" class="delete-button">Radera lista</button>
+        </div>
+
+        <!-- part 3, display and edit contact -->
+        <div class="section-container" id="contact-container">
+            <h2>Kontaktlista</h2>
+            <ul id="contact-list">
+            </ul>
+        </div>
+
+    </main>
+    <script src="js/main.js"></script>
+</body>
+</html>
