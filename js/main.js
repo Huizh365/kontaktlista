@@ -109,27 +109,26 @@ function getErrorMessage(message) {
 // edit one contact
 function editContact(e) {
     const contactInfo =  e.target.parentNode;
-    contactInfo.children[0].disabled = false;
-    contactInfo.children[1].disabled = false;
-    contactInfo.children[3].style.display = 'inline';
-    e.target.style.display = 'none';
+    changeButton(contactInfo, true);
 }
 
 // save one contact
 function saveContact(e) {
     e.preventDefault();
     const contactInfo =  e.target.parentNode;
-    const nameInfo = contactInfo.children[0];
-    const telInfo = contactInfo.children[1];
     if(!validateForm(nameInfo, telInfo)){
         return;
     }
-    nameInfo.disabled = true;
-    telInfo.disabled = true;
-    e.target.style.display = 'none';
-    contactInfo.children[2].style.display = 'inline';
+    changeButton(contactInfo, false);
 }
 
+//show edit button or save button
+function changeButton(contactInfo, isEditing) {
+    contactInfo.children[0].disabled = !isEditing;
+    contactInfo.children[1].disabled = !isEditing;
+    contactInfo.children[2].style.display = isEditing?'none':'inline';
+    contactInfo.children[3].style.display = isEditing?'inline':'none';
+}
 
 // delete one contact
 function deleteContact(e){
