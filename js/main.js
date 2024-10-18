@@ -116,7 +116,7 @@ function editContact(e) {
 function saveContact(e) {
     e.preventDefault();
     const contactInfo =  e.target.parentNode;
-    if(!validateForm(nameInfo, telInfo)){
+    if(!validateForm(contactInfo.children[0], contactInfo.children[1])){
         return;
     }
     changeButton(contactInfo, false);
