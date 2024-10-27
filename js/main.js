@@ -8,6 +8,7 @@ const deleteContactListBtn = document.getElementById('delete-all-btn');
 deleteContactListBtn.style.display = 'none';
 const contactList = document.getElementById('contact-list');
 
+document.addEventListener('DOMContentLoaded', loadFromLocalStorage);
 
 //create contact
 createContactBtn.addEventListener('click', function(e){
@@ -18,26 +19,12 @@ createContactBtn.addEventListener('click', function(e){
         return;
     }
 
-    const contactInfo = createElement(nameInput.value, telInput.value);
     //create elements and get info from input
-    // const contactInfo = document.createElement('li');
-    // contactInfo.className = 'contact-info';
-
-    // const nameInfo = createInput('text', nameInput.value, 'added-name');
-    // const telInfo = createInput('tel', telInput.value, 'added-tel');
-
-    // const editBtn = createButton('Ändra', 'edit-button', editContact);
-    // const saveBtn = createButton('Spara', 'save-button', saveContact);
-    // saveBtn.style.display = 'none';
-    // const deleteBtn = createButton('Radera', 'delete-button', deleteContact);
-
-
-    //add all elements
+    const contactInfo = createElement(nameInput.value, telInput.value);
     contactList.appendChild(contactInfo);
-    // contactInfo.append(nameInfo, telInfo, editBtn, saveBtn, deleteBtn);
 
      //save to local storage
-     saveToLocalStorage(nameInput, telInput);
+     saveToLocalStorage();
 
     //clear input 
     nameInput.value = '';
@@ -56,6 +43,7 @@ deleteContactListBtn.addEventListener('click', function(){
     } else {
         return;
     }
+    saveToLocalStorage();
     showOrHideDeleteBtn();
 })
 
@@ -143,6 +131,7 @@ function saveContact(e) {
     if(!validateForm(contactInfo.children[0], contactInfo.children[1])){
         return;
     }
+    saveToLocalStorage();
     changeButton(contactInfo, false);
 }
 
@@ -157,6 +146,7 @@ function changeButton(contactInfo, isEditing) {
 // delete one contact
 function deleteContact(e){
     e.target.parentNode.remove();
+    saveToLocalStorage();
     showOrHideDeleteBtn();
 }
 
@@ -170,14 +160,21 @@ function showOrHideDeleteBtn() {
     changeCreateBtnSize(); 
 }
 /*************** local storage ****************/
-function saveToLocalStorage(nameInput, telInput){
-    const apiContactObject = localStorage.getItem('contact-list') ? JSON.parse(localStorage.getItem('contact-list')) : [];
-    apiContactObject.push({'name': nameInput.value, 'tel': telInput.value} );
-    localStorage.setItem('api-contact-list', JSON.stringify(apiContactObject));
-}   
+function saveToLocalStorage(){
+    const contacts = Array.from(contactList.children).map(contact => ({
+        name: contact.children[0].value,
+        tel: contact.children[1].value
+    }));
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+}
 
 function loadFromLocalStorage(){
-
+    const apiContacts = JSON.parse(localStorage.getItem('contacts'));
+    apiContacts.forEach(contact => {
+        const contactInfo = createElement(contact.name, contact.tel);
+        contactList.appendChild(contactInfo);        
+    });
+    showOrHideDeleteBtn();
 }
 
 
