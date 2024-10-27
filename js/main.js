@@ -1,3 +1,4 @@
+
 //get elements
 let errorMessage = document.getElementById('error-message');
 const nameInput = document.getElementById('name-input');
@@ -7,6 +8,7 @@ const deleteContactListBtn = document.getElementById('delete-all-btn');
 deleteContactListBtn.style.display = 'none';
 const contactList = document.getElementById('contact-list');
 
+document.addEventListener('DOMContentLoaded', loadFromLocalStorage);
 
 //create contact
 createContactBtn.addEventListener('click', function(e){
@@ -18,20 +20,11 @@ createContactBtn.addEventListener('click', function(e){
     }
 
     //create elements and get info from input
-    const contactInfo = document.createElement('li');
-    contactInfo.className = 'contact-info';
-
-    const nameInfo = createInput('text', nameInput.value, 'added-name');
-    const telInfo = createInput('tel', telInput.value, 'added-tel');
-
-    const editBtn = createButton('Ändra', 'edit-button', editContact);
-    const saveBtn = createButton('Spara', 'save-button', saveContact);
-    saveBtn.style.display = 'none';
-    const deleteBtn = createButton('Radera', 'delete-button', deleteContact);
-
-    //add all elements
+    const contactInfo = createElement(nameInput.value, telInput.value);
     contactList.appendChild(contactInfo);
-    contactInfo.append(nameInfo, telInfo, editBtn, saveBtn, deleteBtn);
+
+     //save to local storage
+     saveToLocalStorage();
 
     //clear input 
     nameInput.value = '';
@@ -39,6 +32,7 @@ createContactBtn.addEventListener('click', function(e){
 
     showOrHideDeleteBtn()
 })
+
 
 
 //delete contact list
@@ -49,12 +43,30 @@ deleteContactListBtn.addEventListener('click', function(){
     } else {
         return;
     }
+    saveToLocalStorage();
     showOrHideDeleteBtn();
 })
 
 
 
 /**********************Functions********************/
+function createElement (name, tel) {
+    const contactInfo = document.createElement('li');
+    contactInfo.className = 'contact-info';
+
+    const nameInfo = createInput('text', name, 'added-name');
+    const telInfo = createInput('tel', tel, 'added-tel');
+
+    const editBtn = createButton('Ändra', 'edit-button', editContact);
+    const saveBtn = createButton('Spara', 'save-button', saveContact);
+    saveBtn.style.display = 'none';
+    const deleteBtn = createButton('Radera', 'delete-button', deleteContact);
+
+    contactInfo.append(nameInfo, telInfo, editBtn, saveBtn, deleteBtn);
+
+    return contactInfo;
+}
+
 // create input
 function createInput(type, value, className) {
     const inputField = document.createElement('input')
@@ -119,6 +131,7 @@ function saveContact(e) {
     if(!validateForm(contactInfo.children[0], contactInfo.children[1])){
         return;
     }
+    saveToLocalStorage();
     changeButton(contactInfo, false);
 }
 
@@ -133,6 +146,7 @@ function changeButton(contactInfo, isEditing) {
 // delete one contact
 function deleteContact(e){
     e.target.parentNode.remove();
+    saveToLocalStorage();
     showOrHideDeleteBtn();
 }
 
@@ -144,6 +158,23 @@ function showOrHideDeleteBtn() {
         deleteContactListBtn.style.display = 'none';
     }
     changeCreateBtnSize(); 
+}
+/*************** local storage ****************/
+function saveToLocalStorage(){
+    const contacts = Array.from(contactList.children).map(contact => ({
+        name: contact.children[0].value,
+        tel: contact.children[1].value
+    }));
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+}
+
+function loadFromLocalStorage(){
+    const apiContacts = JSON.parse(localStorage.getItem('contacts'));
+    apiContacts.forEach(contact => {
+        const contactInfo = createElement(contact.name, contact.tel);
+        contactList.appendChild(contactInfo);        
+    });
+    showOrHideDeleteBtn();
 }
 
 
