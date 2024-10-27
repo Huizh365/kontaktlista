@@ -18,24 +18,26 @@ createContactBtn.addEventListener('click', function(e){
         return;
     }
 
+    const contactInfo = createElement(nameInput.value, telInput.value);
     //create elements and get info from input
-    const contactInfo = document.createElement('li');
-    contactInfo.className = 'contact-info';
+    // const contactInfo = document.createElement('li');
+    // contactInfo.className = 'contact-info';
 
-    const nameInfo = createInput('text', nameInput.value, 'added-name');
-    const telInfo = createInput('tel', telInput.value, 'added-tel');
+    // const nameInfo = createInput('text', nameInput.value, 'added-name');
+    // const telInfo = createInput('tel', telInput.value, 'added-tel');
 
-    const editBtn = createButton('Ändra', 'edit-button', editContact);
-    const saveBtn = createButton('Spara', 'save-button', saveContact);
-    saveBtn.style.display = 'none';
-    const deleteBtn = createButton('Radera', 'delete-button', deleteContact);
+    // const editBtn = createButton('Ändra', 'edit-button', editContact);
+    // const saveBtn = createButton('Spara', 'save-button', saveContact);
+    // saveBtn.style.display = 'none';
+    // const deleteBtn = createButton('Radera', 'delete-button', deleteContact);
 
-    //save to local storage
-    saveToLocalStorage(nameInput, telInput);
 
     //add all elements
     contactList.appendChild(contactInfo);
-    contactInfo.append(nameInfo, telInfo, editBtn, saveBtn, deleteBtn);
+    // contactInfo.append(nameInfo, telInfo, editBtn, saveBtn, deleteBtn);
+
+     //save to local storage
+     saveToLocalStorage(nameInput, telInput);
 
     //clear input 
     nameInput.value = '';
@@ -43,6 +45,7 @@ createContactBtn.addEventListener('click', function(e){
 
     showOrHideDeleteBtn()
 })
+
 
 
 //delete contact list
@@ -59,6 +62,23 @@ deleteContactListBtn.addEventListener('click', function(){
 
 
 /**********************Functions********************/
+function createElement (name, tel) {
+    const contactInfo = document.createElement('li');
+    contactInfo.className = 'contact-info';
+
+    const nameInfo = createInput('text', name, 'added-name');
+    const telInfo = createInput('tel', tel, 'added-tel');
+
+    const editBtn = createButton('Ändra', 'edit-button', editContact);
+    const saveBtn = createButton('Spara', 'save-button', saveContact);
+    saveBtn.style.display = 'none';
+    const deleteBtn = createButton('Radera', 'delete-button', deleteContact);
+
+    contactInfo.append(nameInfo, telInfo, editBtn, saveBtn, deleteBtn);
+
+    return contactInfo;
+}
+
 // create input
 function createInput(type, value, className) {
     const inputField = document.createElement('input')
