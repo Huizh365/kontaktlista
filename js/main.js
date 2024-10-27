@@ -1,3 +1,4 @@
+
 //get elements
 let errorMessage = document.getElementById('error-message');
 const nameInput = document.getElementById('name-input');
@@ -28,6 +29,9 @@ createContactBtn.addEventListener('click', function(e){
     const saveBtn = createButton('Spara', 'save-button', saveContact);
     saveBtn.style.display = 'none';
     const deleteBtn = createButton('Radera', 'delete-button', deleteContact);
+
+    //save to local storage
+    saveToLocalStorage(nameInput, telInput);
 
     //add all elements
     contactList.appendChild(contactInfo);
@@ -144,6 +148,16 @@ function showOrHideDeleteBtn() {
         deleteContactListBtn.style.display = 'none';
     }
     changeCreateBtnSize(); 
+}
+/*************** local storage ****************/
+function saveToLocalStorage(nameInput, telInput){
+    const apiContactObject = localStorage.getItem('contact-list') ? JSON.parse(localStorage.getItem('contact-list')) : [];
+    apiContactObject.push({'name': nameInput.value, 'tel': telInput.value} );
+    localStorage.setItem('api-contact-list', JSON.stringify(apiContactObject));
+}   
+
+function loadFromLocalStorage(){
+
 }
 
 
